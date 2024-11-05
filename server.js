@@ -1,5 +1,5 @@
 import express from "express";
-import authRoutes from "./routes/auth.js";
+import routes from "./routes/index.js";
 import middlewares from "./middlewares.js";
 import cors from "cors";
 import dotenv from "dotenv";
@@ -21,7 +21,7 @@ app.use(
   })
 );
 
-app.use("/auth", authRoutes);
+app.use("/api", routes);
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);

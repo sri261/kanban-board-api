@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import { db } from "./db.js";
 
-const secret = "temp_secret";
+export const secret = "temp_secret";
 
 const login = (req, res) => {
   const { email, password: userPassword } = req.body;
@@ -27,4 +27,16 @@ const login = (req, res) => {
     });
 };
 
-export default { login };
+const getColumns = (req, res) => {
+  const { board_id } = req.params;
+  db("columns")
+    .where("board_id", board_id)
+    .then((cols) => {
+      res.status(200).json(cols);
+    })
+    .catch((error) => {
+      res.status(500).json({ error: "Internal Server Error" });
+    });
+};
+
+export default { login, getColumns };
