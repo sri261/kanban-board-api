@@ -12,9 +12,10 @@ const checkTokenValidity = (req, res, next) => {
         const isValid = jwt.verify(token, secret);
         if (isValid) next();
       } catch (error) {
-        console.log("error", error);
         res.status(401).json(error);
       }
+    } else {
+      res.status(403).json({ message: "Forbidden" });
     }
   }
 };

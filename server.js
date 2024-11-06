@@ -11,13 +11,15 @@ const app = express();
 const port = 3000;
 
 app.use(express.json());
+app.options("*", cors());
 
 app.use(middlewares.checkTokenValidity);
 
 app.use(
   cors({
     origin: process.env.ORIGIN_BASE_URL,
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Authorization"],
   })
 );
 
