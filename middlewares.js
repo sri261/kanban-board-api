@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { secret } from "./controller.js";
+import { secret } from "./controllers/controller.js";
 
 const checkTokenValidity = (req, res, next) => {
   if (req.path === "/api/login") {

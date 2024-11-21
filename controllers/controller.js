@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { db } from "./db.js";
+import { db } from "../db.js";
 
 export const secret = "temp_secret";
 
