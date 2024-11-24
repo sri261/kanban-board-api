@@ -12,4 +12,22 @@ const getCards = async (req, res) => {
     });
 };
 
-export default { getCards };
+const addCard = async (req, res) => {
+  const { column_id, title, description, position } = req.body;
+  try {
+    const card = await db("cards")
+      .insert({ column_id, title, description, position })
+      .returning("*");
+    console.log(card);
+    res.status(200).json(card);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error);
+  }
+};
+
+const deleteCard = async () => {};
+
+const editCard = async () => {};
+
+export default { getCards, addCard, deleteCard, editCard };
