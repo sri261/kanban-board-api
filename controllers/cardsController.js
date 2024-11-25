@@ -18,15 +18,21 @@ const addCard = async (req, res) => {
     const card = await db("cards")
       .insert({ column_id, title, description, position })
       .returning("*");
-    console.log(card);
     res.status(200).json(card);
   } catch (error) {
-    console.log(error);
     res.status(500).json(error);
   }
 };
 
-const deleteCard = async () => {};
+const deleteCard = async (req, res) => {
+  const { card_id } = req.params;
+  try {
+    await db("cards").where("id", card_id).del();
+    res.status(200).json({ message: "Deleted" });
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
 
 const editCard = async () => {};
 
