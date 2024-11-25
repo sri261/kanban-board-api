@@ -12,7 +12,8 @@ router.delete("/columns/:column_id", controller.deleteColumn);
 router.put("/columns/:column_id", controller.editColumn);
 
 router.get("/cards/:column_id", cardsController.getCards);
-router.post("/cards", cardsController.addCard);
-router.delete("/cards/:card_id", cardsController.deleteCard);
+router.post("/card", cardsController.addCard);
+router.delete("/card/:card_id", cardsController.deleteCard);
+router.put("/card/:card_id", cardsController.editCard);
 
 export default router;

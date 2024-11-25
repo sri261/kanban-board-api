@@ -34,6 +34,19 @@ const deleteCard = async (req, res) => {
   }
 };
 
-const editCard = async () => {};
+const editCard = async (req, res) => {
+  const { card_id } = req.params;
+  const body = req.body;
+
+  try {
+    const card = await db("cards")
+      .where("id", card_id)
+      .update({ ...body })
+      .returning("*");
+    res.status(200).json(card);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
 
 export default { getCards, addCard, deleteCard, editCard };
