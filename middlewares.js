@@ -1,5 +1,4 @@
 import jwt from "jsonwebtoken";
-import { secret } from "./controllers/controller.js";
 
 const checkTokenValidity = (req, res, next) => {
   if (req.path === "/api/login") {
@@ -9,7 +8,7 @@ const checkTokenValidity = (req, res, next) => {
     if (authHeader && authHeader.startsWith("Bearer ")) {
       try {
         const token = authHeader.split(" ")[1];
-        const isValid = jwt.verify(token, secret);
+        const isValid = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
         if (isValid) next();
       } catch (error) {
         res.status(401).json(error);
