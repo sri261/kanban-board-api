@@ -1,10 +1,12 @@
 import express from "express";
 import controller from "../controllers/controller.js";
 import cardsController from "../controllers/cardsController.js";
+import authController from "../controllers/authController.js";
 
 const router = express.Router();
 
-router.post("/login", controller.login);
+router.post("/login", authController.login);
+router.post("/refresh", authController.refresh);
 
 router.get("/columns/:board_id", controller.getColumns);
 router.post("/columns/:board_id", controller.addColumns);

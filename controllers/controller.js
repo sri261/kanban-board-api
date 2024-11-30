@@ -1,40 +1,4 @@
-import jwt from "jsonwebtoken";
 import { db } from "../db.js";
-
-const login = async (req, res) => {
-  const { email, password: userPassword } = req.body;
-  try {
-    const user = await db("users").where("email", email).first();
-    if (!user) return res.status(404).json({ error: "User does not exist" });
-    const { id, password, name } = user;
-    if (userPassword !== password)
-      return res.status(500).json({ error: "Incorrect Password" });
-
-    const access_token = jwt.sign(
-      { id, name },
-      process.env.ACCESS_TOKEN_SECRET,
-      {
-        expiresIn: "1h",
-      }
-    );
-    const refresh_token = jwt.sign(
-      { id, name },
-      process.env.REFRESH_TOKEN_SECRET,
-      {
-        expiresIn: "1d",
-      }
-    );
-
-    res.status(200).json({
-      id,
-      name,
-      access_token,
-      refresh_token,
-    });
-  } catch (error) {
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-};
 
 const getColumns = (req, res) => {
   const { board_id } = req.params;
@@ -85,4 +49,4 @@ const editColumn = async (req, res) => {
   }
 };
 
-export default { login, getColumns, addColumns, deleteColumn, editColumn };
+export default { getColumns, addColumns, deleteColumn, editColumn };

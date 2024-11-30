@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 
 const checkTokenValidity = (req, res, next) => {
-  if (req.path === "/api/login") {
+  if (req.path === "/api/login" || req.path === "/api/refresh") {
     next();
   } else {
     const authHeader = req.headers.authorization;
