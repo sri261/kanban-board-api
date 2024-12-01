@@ -3,7 +3,7 @@ import { db } from "../db.js";
 
 const generateAccessTokenAndRefreshToken = async ({ id, name }) => {
   const access_token = jwt.sign({ id, name }, process.env.ACCESS_TOKEN_SECRET, {
-    expiresIn: "1m",
+    expiresIn: "10m",
   });
   const refresh_token = jwt.sign(
     { id, name },
