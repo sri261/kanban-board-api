@@ -13,8 +13,6 @@ const port = 3000;
 app.use(express.json());
 app.options("*", cors());
 
-app.use(middlewares.checkTokenValidity);
-
 app.use(
   cors({
     origin: process.env.ORIGIN_BASE_URL,
@@ -22,6 +20,8 @@ app.use(
     allowedHeaders: ["Authorization"],
   })
 );
+
+app.use(middlewares.checkTokenValidity);
 
 app.use("/api", routes);
 
