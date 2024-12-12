@@ -24,4 +24,6 @@ router.post("/board", boardsController.addBoard);
 router.delete("/board/:board_id", boardsController.deleteBoard);
 router.put("/board/:board_id", boardsController.editBoard);
 
+router.get("/board/:board_id", boardsController.getBoard);
+
 export default router;
