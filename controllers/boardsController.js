@@ -1,3 +1,4 @@
+import { validationResult } from "express-validator";
 import { db } from "../db.js";
 
 const getBoards = async (req, res) => {
@@ -13,6 +14,11 @@ const getBoards = async (req, res) => {
 };
 
 const addBoard = async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    res.status(400).json(errors.array());
+  }
+
   const { user_id, title } = req.body;
   try {
     const board = await db("boards").insert({ user_id, title }).returning("*");
@@ -83,7 +89,6 @@ const getBoard = async (req, res) => {
       .groupBy("boards.id");
     res.status(200).json(board);
   } catch (error) {
-    console.log(error);
     res.status(500).json(error);
   }
 };

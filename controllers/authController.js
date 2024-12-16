@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import { db } from "../db.js";
+import { validationResult } from "express-validator";
 
 const generateAccessTokenAndRefreshToken = async ({ id, name }) => {
   const access_token = jwt.sign({ id, name }, process.env.ACCESS_TOKEN_SECRET, {
@@ -18,6 +19,10 @@ const generateAccessTokenAndRefreshToken = async ({ id, name }) => {
 };
 
 const login = async (req, res) => {
+  const validationErrors = validationResult(req);
+  if (!validationErrors.isEmpty())
+    return res.status(400).json(validationErrors);
+
   const { email, password: userPassword } = req.body;
   try {
     const user = await db("users").where("email", email).first();
@@ -39,11 +44,15 @@ const login = async (req, res) => {
       refresh_token,
     });
   } catch (error) {
-    res.status(500).json({ error: "Internal Server Error" });
+    return res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
 const refresh = async (req, res) => {
+  const validationErrors = validationResult(req);
+  if (!validationErrors.isEmpty())
+    return res.status(400).json(validationErrors);
+
   const { refresh_token: incoming_refresh_token } = req.body;
 
   try {

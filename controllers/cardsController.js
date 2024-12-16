@@ -1,3 +1,4 @@
+import { validationResult } from "express-validator";
 import { db } from "../db.js";
 
 const getCards = async (req, res) => {
@@ -13,6 +14,9 @@ const getCards = async (req, res) => {
 };
 
 const addCard = async (req, res) => {
+  const validationErrors = validationResult(req);
+  if (!validationErrors.isEmpty())
+    return res.status(400).json(validationErrors);
   const { column_id, title, description, position } = req.body;
   try {
     const card = await db("cards")
