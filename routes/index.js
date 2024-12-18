@@ -13,7 +13,16 @@ router.post(
   checkSchema(validationSchemas.authValidationSchemas.loginValidationSchema),
   authController.login
 );
-router.post("/refresh", authController.refresh);
+router.post(
+  "/signup",
+  checkSchema(validationSchemas.authValidationSchemas.signupValidation),
+  authController.signup
+);
+router.post(
+  "/refresh",
+  checkSchema(validationSchemas.authValidationSchemas.refreshTokenValidation),
+  authController.refresh
+);
 
 router.get("/columns/:board_id", controller.getColumns);
 router.post("/columns/:board_id", controller.addColumns);

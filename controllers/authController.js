@@ -78,4 +78,38 @@ const refresh = async (req, res) => {
   }
 };
 
-export default { login, refresh };
+const signup = async (req, res) => {
+  const validationErrors = validationResult(req);
+  if (!validationErrors.isEmpty())
+    return res.status(400).json(validationErrors);
+  const { name, email, password } = req.body;
+
+  try {
+    const checkUser = await db("users").where("email", email).first();
+    if (checkUser)
+      return res.status(400).json({ error: "Email already exists" });
+
+    const user = await db("users")
+      .insert({ name, email, password })
+      .returning("*");
+
+    const { id, name: databaseName } = user[0];
+
+    const { access_token, refresh_token } =
+      await generateAccessTokenAndRefreshToken({
+        id,
+        name: databaseName,
+      });
+
+    return res.status(200).json({
+      id,
+      name: databaseName,
+      access_token,
+      refresh_token,
+    });
+  } catch (error) {
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+export default { login, refresh, signup };

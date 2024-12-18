@@ -1,7 +1,9 @@
 import jwt from "jsonwebtoken";
 
+const publicRoutes = ["/api/login", "/api/refresh", "/api/signup"];
+
 const checkTokenValidity = (req, res, next) => {
-  if (req.path === "/api/login" || req.path === "/api/refresh") {
+  if (publicRoutes.includes(req.path)) {
     next();
   } else {
     const authHeader = req.headers.authorization;

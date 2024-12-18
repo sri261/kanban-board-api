@@ -9,7 +9,7 @@ export function up(knex) {
       table.string("name", 255).notNullable();
       table.string("email", 255).unique().notNullable();
       table.string("password", 255).notNullable();
-      table.timestamps(true, true); // created_at, updated_at
+      table.timestamps(true, true);
     })
     .createTable("boards", (table) => {
       table.increments("id").primary();
@@ -29,7 +29,7 @@ export function up(knex) {
         .inTable("boards")
         .onDelete("CASCADE");
       table.string("title", 255).notNullable();
-      table.integer("position").notNullable(); // for ordering columns
+      table.integer("position").notNullable();
       table.timestamps(true, true);
     })
     .createTable("cards", (table) => {
@@ -41,7 +41,7 @@ export function up(knex) {
         .onDelete("CASCADE");
       table.string("title", 255).notNullable();
       table.text("description");
-      table.integer("position").notNullable(); // for ordering cards within a column
+      table.integer("position").notNullable();
       table.timestamp("due_date");
       table.timestamps(true, true);
     });
