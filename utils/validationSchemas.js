@@ -33,12 +33,6 @@ export const validationSchemas = {
 
   boardValidationSchemas: {
     addBoardValidationSchema: {
-      user_id: {
-        notEmpty: { errorMessage: "User ID is required" },
-        isInt: {
-          errorMessage: "User ID must be a valid integer",
-        },
-      },
       title: {
         notEmpty: { errorMessage: "Title is required" },
         isLength: {
@@ -47,12 +41,6 @@ export const validationSchemas = {
             max: 100,
           },
         },
-      },
-    },
-    getBoardValidationSchema: {
-      user_id: {
-        in: ["params"],
-        notEmpty: true,
       },
     },
   },

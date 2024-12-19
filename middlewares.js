@@ -10,8 +10,9 @@ const checkTokenValidity = (req, res, next) => {
     if (authHeader && authHeader.startsWith("Bearer ")) {
       try {
         const token = authHeader.split(" ")[1];
-        const isValid = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
-        if (isValid) next();
+        const { id, name } = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+        req.user = { id, name };
+        if (id && name) next();
       } catch (error) {
         res.status(401).json(error);
       }

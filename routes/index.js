@@ -38,13 +38,7 @@ router.post(
 router.delete("/card/:card_id", cardsController.deleteCard);
 router.put("/card/:card_id", cardsController.editCard);
 
-router.get(
-  "/boards/:user_id",
-  checkSchema(
-    validationSchemas.boardValidationSchemas.getBoardValidationSchema
-  ),
-  boardsController.getBoards
-);
+router.get("/boards", boardsController.getBoards);
 
 router.post(
   "/board",
