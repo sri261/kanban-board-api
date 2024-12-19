@@ -29,7 +29,7 @@ const login = async (req, res) => {
     if (!user) return res.status(404).json({ error: "User does not exist" });
     const { id, password, name } = user;
     if (userPassword !== password)
-      return res.status(500).json({ error: "Incorrect Password" });
+      return res.status(400).json({ error: "Incorrect Password" });
 
     const { access_token, refresh_token } =
       await generateAccessTokenAndRefreshToken({
