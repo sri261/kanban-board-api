@@ -51,4 +51,11 @@ export const validationSchemas = {
       },
     },
   },
+  columnValidationSchemas: {
+    addColumn: {
+      title: {
+        notEmpty: { errorMessage: "Title is required" },
+      },
+    },
+  },
 };

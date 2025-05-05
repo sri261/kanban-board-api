@@ -20,6 +20,9 @@ const addColumns = async (req, res) => {
   const { title, position } = req.body;
   const { board_id } = req.params;
   try {
+    const checkTitle = await db("columns").where("title", title).first();
+    if (checkTitle)
+      return res.status(400).json({ error: "Title already exists" });
     const col = await db("columns")
       .insert({ title, position, board_id })
       .returning("*");
